@@ -1,0 +1,45 @@
+CREATE DATABASE ImpermearDB;
+
+USE ImpermearDB;
+
+-- Tabela de Obras
+CREATE TABLE Projects (
+    project_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE,
+    status ENUM('Planejamento', 'Execução', 'Concluído') DEFAULT 'Planejamento'
+);
+
+-- Tabela de Avaliação de Riscos
+CREATE TABLE Risk_Assessment (
+    risk_id INT AUTO_INCREMENT PRIMARY KEY,
+    project_id INT NOT NULL,
+    area VARCHAR(255) NOT NULL,
+    risk_level ENUM('Baixo', 'Médio', 'Alto') DEFAULT 'Baixo',
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (project_id) REFERENCES Projects(project_id)
+);
+
+-- Tabela de Recursos
+CREATE TABLE Resources (
+    resource_id INT AUTO_INCREMENT PRIMARY KEY,
+    project_id INT NOT NULL,
+    material_name VARCHAR(255) NOT NULL,
+    quantity FLOAT NOT NULL,
+    cost FLOAT NOT NULL,
+    total_cost FLOAT AS (quantity * cost) STORED,
+    FOREIGN KEY (project_id) REFERENCES Projects(project_id)
+);
+
+-- Tabela de Relatórios
+CREATE TABLE Reports (
+    report_id INT AUTO_INCREMENT PRIMARY KEY,
+    project_id INT NOT NULL,
+    summary TEXT NOT NULL,
+    recommendations TEXT,
+    generated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (project_id) REFERENCES Projects(project_id)
+);
