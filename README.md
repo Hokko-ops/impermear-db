@@ -16,3 +16,4 @@ Este repositório contém o modelo de banco de dados desenvolvido para a empresa
 ## Tecnologias utilizadas
 - SQL (MySQL ou PostgreSQL)
 - Modelagem Relacional
+
